@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Page Title</title>
+</head>
+<body>
+  <script>
+    // Your JavaScript goes here!
+    function playRound(playerSelection, computerSelection) {
+        const pchoice = playerSelection.toLowercase();
+        const cchoice = computerSelection.toLowercase();
+        if (pchoice === cchoice) {
+            return "It's a draw!"
+        }
+        if (pchoice === "rock" && cchoice == "paper") {
+            return "You lose! Paper beats rock."
+        } else if (pchoice === "scissors" && cchoice == "rock") {
+            return "You lose! Rock beats scissors."
+        } else if (pchoice === "paper" && cchoice == "scissors") {
+            return "You lose! Scissors."
+        } else if (pchoice === "paper" && cchoice == "scissors") {
+            return "You lose! Scissors."
+        } else {
+            return 'You win!'
+        } 
+    }
+  </script>
+</body>
+</html>
