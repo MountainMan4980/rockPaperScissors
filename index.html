@@ -5,26 +5,77 @@
   <title>Page Title</title>
 </head>
 <body>
-  <script>
-    // Your JavaScript goes here!
-    function playRound(playerSelection, computerSelection) {
-        const pchoice = playerSelection.toLowercase();
-        const cchoice = computerSelection.toLowercase();
-        if (pchoice === cchoice) {
-            return "It's a draw!"
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div class="results"></div>
+    <script>
+        // Your JavaScript goes here!
+        const container = document.querySelector('.results')
+        let playerScore = 0;
+        let computerScore = 0;
+        const scoreboard = document.createElement('div');
+        scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
+        container.appendChild(scoreboard)
+        const rock = document.querySelector('#rock')
+        rock.addEventListener('click', function(e) {
+            const divRock = document.createElement('div')
+            divRock.textContent = playRound('rock')
+            container.appendChild(divRock)
+            if (divRock.textContent.includes('You win')) {
+                playerScore ++;
+            } else if (divRock.textContent.includes('You lose')) {
+                computerScore ++
+            }
+            scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
+        });
+        const paper = document.querySelector('#paper')
+        paper.addEventListener('click', function(e) {
+            const divPaper = document.createElement('div')
+            divPaper.textContent = playRound('paper')
+            container.appendChild(divPaper)
+            if (divPaper.textContent.includes('You win')) {
+                playerScore ++;
+            } else if (divPaper.textContent.includes('You lose')) {
+                computerScore ++
+            }
+            scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
+        });
+        const scissors = document.querySelector('#scissors')
+        scissors.addEventListener('click', function(e) {
+            const divScissors = document.createElement('div')
+            divScissors.textContent = playRound('scissors')
+            container.appendChild(divScissors)
+            if (divScissors.textContent.includes('You win')) {
+                playerScore ++;
+            } else if (divScissors.textContent.includes('You lose')) {
+                computerScore ++
+            }
+            scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
+        });
+        function playRound(pchoice) {
+            const computerChoices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * computerChoices.length);
+            const cchoice = computerChoices[randomIndex];
+            console.log(`Computer chooses ${cchoice}`)
+            if (pchoice === cchoice) {
+                return `Computer chooses ${cchoice}.`+
+                ` It's a draw!`
+            }
+            if (pchoice === "rock" && cchoice == "paper") {
+                return `Computer chooses ${cchoice}.`+
+                ` You lose!`
+            } else if (pchoice === "scissors" && cchoice == "rock") {
+                return `Computer chooses ${cchoice}.` +
+                ` You lose!`
+            } else if (pchoice === "paper" && cchoice == "scissors") {
+                return `Computer chooses ${cchoice}.` +
+                ` You lose!`
+            } else {
+                return `Computer chooses ${cchoice}.` +
+                `You win!`
+            } 
         }
-        if (pchoice === "rock" && cchoice == "paper") {
-            return "You lose! Paper beats rock."
-        } else if (pchoice === "scissors" && cchoice == "rock") {
-            return "You lose! Rock beats scissors."
-        } else if (pchoice === "paper" && cchoice == "scissors") {
-            return "You lose! Scissors."
-        } else if (pchoice === "paper" && cchoice == "scissors") {
-            return "You lose! Scissors."
-        } else {
-            return 'You win!'
-        } 
-    }
-  </script>
+    </script>
 </body>
 </html>
