@@ -11,16 +11,19 @@
     <div class="results"></div>
     <script>
         // Your JavaScript goes here!
-        const container = document.querySelector('.results')
         let playerScore = 0;
         let computerScore = 0;
+        let roundCounter = 1;
+        const container = document.querySelector('.results')
         const scoreboard = document.createElement('div');
-        scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
-        container.appendChild(scoreboard)
-        const rock = document.querySelector('#rock')
-        rock.addEventListener('click', function(e) {
+        h1Final = document.createElement('h1')
+        const rockCallback = () => {
+            if (h1Final.textContent === "Victory!" || h1Final.textContent === "Defeat!") {
+                rock.removeEventListener('click', rockCallback)
+                return
+            }
             const divRock = document.createElement('div')
-            divRock.textContent = playRound('rock')
+            divRock.textContent = `Round ${roundCounter} : ${playRound('rock')}`
             container.appendChild(divRock)
             if (divRock.textContent.includes('You win')) {
                 playerScore ++;
@@ -28,11 +31,24 @@
                 computerScore ++
             }
             scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
-        });
-        const paper = document.querySelector('#paper')
-        paper.addEventListener('click', function(e) {
+            roundCounter ++;
+            if (playerScore >= 5) {
+                rock.removeEventListener('click', rockCallback)
+                h1Final.textContent = 'Victory!'
+                container.appendChild(h1Final)
+            } else if (computerScore >= 5) {
+                rock.removeEventListener('click', rockCallback)
+                h1Final.textContent = 'Defeat!'
+                container.appendChild(h1Final)
+            }
+        }
+        const paperCallback = () => {
+            if (h1Final.textContent === "Victory!" || h1Final.textContent === "Defeat!") {
+                paper.removeEventListener('click', rockCallback)
+                return
+            }
             const divPaper = document.createElement('div')
-            divPaper.textContent = playRound('paper')
+            divPaper.textContent = `Round ${roundCounter} : ${playRound('paper')}`
             container.appendChild(divPaper)
             if (divPaper.textContent.includes('You win')) {
                 playerScore ++;
@@ -40,11 +56,25 @@
                 computerScore ++
             }
             scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
-        });
-        const scissors = document.querySelector('#scissors')
-        scissors.addEventListener('click', function(e) {
+            roundCounter ++;
+            if (playerScore >= 5) {
+                paper.removeEventListener('click', paperCallback)
+                h1Final.textContent = 'Victory!'
+                container.appendChild(h1Final)
+            } else if (computerScore >= 5) {
+                paper.removeEventListener('click', paperCallback)
+                h1Final.textContent = 'Defeat!'
+                container.appendChild(h1Final)
+            }
+            
+        }
+        const scissorsCallback = () => {
+            if (h1Final.textContent === "Victory!" || h1Final.textContent === "Defeat!") {
+                scissors.removeEventListener('click', rockCallback)
+                return
+            }
             const divScissors = document.createElement('div')
-            divScissors.textContent = playRound('scissors')
+            divScissors.textContent = `Round ${roundCounter} : ${playRound('scissors')}`
             container.appendChild(divScissors)
             if (divScissors.textContent.includes('You win')) {
                 playerScore ++;
@@ -52,12 +82,35 @@
                 computerScore ++
             }
             scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
-        });
+            roundCounter ++;
+            if (playerScore >= 5) {
+                scissors.removeEventListener('click', scissorsCallback)
+                h1Final.textContent = 'Victory!'
+                container.appendChild(h1Final)
+            } else if (computerScore >= 5) {
+                scissors.removeEventListener('click', scissorsCallback)
+                h1Final.textContent = 'Defeat!'
+                container.appendChild(h1Final)
+            }
+
+        }
+        function documentResults () {
+            
+            scoreboard.textContent = `Player: ${playerScore} Machine: ${computerScore}`;
+            container.appendChild(scoreboard)
+            const rock = document.querySelector('#rock')
+            rock.addEventListener('click',rockCallback);
+            const paper = document.querySelector('#paper')
+            paper.addEventListener('click',paperCallback);
+            const scissors = document.querySelector('#scissors')
+            scissors.addEventListener('click', scissorsCallback);
+
+        }
+        
         function playRound(pchoice) {
             const computerChoices = ['rock', 'paper', 'scissors'];
             const randomIndex = Math.floor(Math.random() * computerChoices.length);
             const cchoice = computerChoices[randomIndex];
-            console.log(`Computer chooses ${cchoice}`)
             if (pchoice === cchoice) {
                 return `Computer chooses ${cchoice}.`+
                 ` It's a draw!`
@@ -76,6 +129,8 @@
                 `You win!`
             } 
         }
+
+        documentResults()
     </script>
 </body>
 </html>
